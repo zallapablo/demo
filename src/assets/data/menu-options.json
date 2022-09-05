@@ -1,0 +1,32 @@
+[
+    {
+        "icon":"home-outline",
+        "name": "Inicio",
+        "redirectTo": "/inicio"
+    },
+    {
+        "icon":"person-outline",
+        "name": "Datos",
+        "redirectTo": "/datos"
+    },
+    {
+        "icon":"reader-outline",
+        "name": "Inscripciones",
+        "redirectTo": "/inscripciones"
+    },
+    {
+        "icon":"megaphone-outline",
+        "name": "Actividades",
+        "redirectTo": "/actividades"
+    },
+    {
+        "icon":"card-outline",
+        "name": "Pagos",
+        "redirectTo": "/pagos"
+    },
+    {
+        "icon":"documents-outline",
+        "name": "Documentos",
+        "redirectTo": "/documentos"
+    }
+]

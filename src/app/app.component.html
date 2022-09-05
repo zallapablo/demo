@@ -1,0 +1,48 @@
+<ion-app> 
+
+  <ion-split-pane when="md" contentId="main">
+
+    <ion-menu id="menu" side="start" menuId="first" contentId="main" color="corp1">
+
+      <ion-header>
+        <ion-toolbar color="corp1">
+          <ion-title>Menú</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        
+        <ion-list>
+  
+          <ion-menu-toggle *ngFor="let c of componentes | async"
+                           autoHide="false" color="comp1">
+  
+            <ion-item [routerLink]="c.redirectTo"
+                      detail> 
+              <ion-icon [name]="c.icon" slot="start"></ion-icon>
+              {{c.name}}
+            </ion-item>
+            
+          </ion-menu-toggle>
+
+          <ion-item detail color="danger" (click)="logOut()">
+            <ion-icon slot="start" name="log-out-outline">
+            </ion-icon>
+            Cerrar sesión
+          </ion-item>
+      
+        </ion-list>
+
+          
+        
+
+  
+      </ion-content>
+    </ion-menu>
+  
+    <ion-router-outlet id="main"></ion-router-outlet>
+
+  </ion-split-pane>
+
+  
+</ion-app>
