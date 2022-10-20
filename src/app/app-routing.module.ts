@@ -44,6 +44,23 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'perfil-participante',
+    loadChildren: () => import('./pages/perfil-participante/perfil-participante.module').then( m => m.PerfilParticipantePageModule)
+  },
+  {
+    path: 'asistencias',
+    loadChildren: () => import('./pages/asistencias/asistencias.module').then( m => m.AsistenciasPageModule)
+  },  {
+    path: 'participantes',
+    loadChildren: () => import('./pages/participantes/participantes.module').then( m => m.ParticipantesPageModule)
+  },
+  {
+    path: 'password',
+    loadChildren: () => import('./pages/password/password.module').then( m => m.PasswordPageModule)
+  },
+
+
 ];
 
 @NgModule({

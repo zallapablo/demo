@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-actividades',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActividadesPage implements OnInit {
 
-  constructor() { }
+  response: Array<Object>;
 
-  ngOnInit() {
+  url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
+
+  constructor(
+    private http: HttpClient,
+    private API: ApiService) { }
+
+  async ngOnInit() {
+
+    const modules = this.API.getModules();
+    
   }
-
 }

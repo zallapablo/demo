@@ -1,0 +1,31 @@
+<ion-header class="ion-no-border">
+
+  <ion-toolbar>
+
+      <ion-buttons slot="start">
+      <ion-menu-button menu="first" color="corp2"></ion-menu-button>
+      </ion-buttons>
+      
+      <ion-title>Selecciona participante</ion-title>
+  </ion-toolbar>
+    
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+  <h1>Selecciona participante</h1>
+
+  <ion-list>
+
+    <ion-item ion-item *ngFor="let hijo of hijos; let i=index">
+
+      <ion-label>{{hijo.name_value_list["stic_personal_environment_contacts_1_name"]["value"]}}</ion-label>
+      <ion-item>
+        <button large ion-button item-right (click)="SelectClicked(hijo.id)">Select</button>
+      </ion-item>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

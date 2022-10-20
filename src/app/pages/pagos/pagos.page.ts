@@ -20,14 +20,13 @@ export class PagosPage implements OnInit {
     ];
 
     const args = JSON.stringify({
-      "session": localStorage.getItem("session_id"),
-      "module_name": "stic_Payments",
-      "fields": fields
+      session: localStorage.getItem("session_id"),
+      filter: "all"
     });
   
     const response = await this.http.get(this.url, {
       params: {
-        method: 'get_module_fields',
+        method: 'get_available_modules',
         input_type: 'JSON',
         response_type: 'JSON',
         rest_data: args
@@ -36,7 +35,5 @@ export class PagosPage implements OnInit {
       .then(res => {
         console.log(res);
       });
-
-    console.log(response);
   }
 }

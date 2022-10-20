@@ -15,17 +15,20 @@ export class InscripcionesPage implements OnInit {
   async ngOnInit() {
 
     const fields = [
-      'phone_mobile'
+      
     ];
 
     const args = JSON.stringify({
       "session": localStorage.getItem("session_id"),
-      "module_name": "Users"
+      "module_name": "Contacts",
+      "id": localStorage.getItem("user_id"),
+      "select_fields": fields,
+      "deleted": 0
     });
   
     const response = await this.http.get(this.url, {
       params: {
-        method: 'get_entry_list',
+        method: 'get_entry',
         input_type: 'JSON',
         response_type: 'JSON',
         rest_data: args

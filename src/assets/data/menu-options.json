@@ -6,18 +6,8 @@
     },
     {
         "icon":"person-outline",
-        "name": "Datos",
-        "redirectTo": "/datos"
-    },
-    {
-        "icon":"reader-outline",
-        "name": "Inscripciones",
-        "redirectTo": "/inscripciones"
-    },
-    {
-        "icon":"megaphone-outline",
-        "name": "Actividades",
-        "redirectTo": "/actividades"
+        "name": "Perfil participante",
+        "redirectTo": "/perfil-participante"
     },
     {
         "icon":"card-outline",
@@ -25,8 +15,39 @@
         "redirectTo": "/pagos"
     },
     {
+        "icon":"megaphone-outline",
+        "name": "Actividades",
+        "redirectTo": "/actividades"
+    },
+    {
+        "icon":"reader-outline",
+        "name": "Inscripciones",
+        "redirectTo": "/inscripciones"
+    },
+    {
+        "icon":"checkmark-circle-outline",
+        "name": "Asistencias",
+        "redirectTo": "/asistencias"
+    },
+    {
         "icon":"documents-outline",
         "name": "Documentos",
         "redirectTo": "/documentos"
+    },
+    {
+        "icon":"person-circle-outline",
+        "name": "Perfil tutor",
+        "redirectTo": "/datos"
+    },
+    {
+        "icon":"accessibility-outline",
+        "name": "Selecciona participante",
+        "redirectTo": "/participantes"
+    },
+    {
+        "icon":"lock-open-outline",
+        "name": "Cambiar contraseña",
+        "redirectTo": "/password"
     }
+
 ]
