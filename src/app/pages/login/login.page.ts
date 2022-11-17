@@ -32,16 +32,32 @@ export class LoginPage {
 
   async login() {
 
-    const url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
+    await this.loginAPI();
+    //console.log("SESSION_ID: ", localStorage.getItem("session_id"));
+    
+    await this.loginArea(); 
+  }
+
+  //  INICIAR SESIÓN EN EL API CON LOS DATOS DE USERS (ADMINISTRADOR)
+  async loginAPI() {
+
     const appName = null;
 
     const userAuth = {  
-      user_name: this.email,
-      password: Md5.hashStr(this.password)
+      user_name: "pablozalla",
+      password: Md5.hashStr("pablozalla")
     }
 
     const args = JSON.stringify({ 'user_auth': userAuth, 'application_name': appName });
+    
+    await this.API.loginAPI(args);
+  }
 
-    await this.API.login(userAuth);
+
+  async loginArea() {
+
+    const res = await this.API.loginArea(this.email, this.password);
+    //console.log("RES", res);
+
   }
 }

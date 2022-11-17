@@ -14,16 +14,64 @@ export class ApiService {
   postId: any;
   application_name = null;
 
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json'
-  })
-
   constructor(
     private http: HttpClient, 
     private router: Router,
     private menuCtrl: MenuController
     ) { }
+
+  async logOut() {
+
+    const args = JSON.stringify({ "session": localStorage.getItem("session_id") });
+
+    await this.http.get(this.url, {
+      params: {
+        method: 'logout',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }}).toPromise();
+
+      localStorage.clear();
+  }
+    
+  async loginAPI(args: any) {
+
+    await this.http.get(this.url, {
+
+      params: {
+        method: 'login',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }})
+      .toPromise()
+      .then(res => {
+        console.log("RES: ", res);
+        this.postId = res;
+
+        localStorage.setItem('session_id', this.postId.id);
+      });
+  }
+
+  async loginArea(username: any, password: any) {
+    
+    const query = "pa_username_c='" + username + "' and pa_password_c='" + password + "'";
+    const res = await this.getEntryList("Contacts", query);
+
+    if(res["total_count"] == 0) {
+      console.log("Usuario no existe");
+      
+    }
+    else {
+      console.log("Usuario existe");
+      localStorage.setItem("contact_id", res["entry_list"][0].id);
+      
+      this.router.navigate(["/sel-inicial"]);
+    }
+    
+    
+  }
 
   async login(userAuth: any) {
 
@@ -37,9 +85,7 @@ export class ApiService {
         input_type: 'JSON',
         response_type: 'JSON',
         rest_data: args
-      },
-      headers: this.headers
-    })
+      }})
       .toPromise()
       .then(res => {
         console.log("RES: ", res);
@@ -170,6 +216,28 @@ export class ApiService {
       "module_name": module,
       "id": id,
       "select_fields": [],
+      "link_name_to_fields_array": []
+    });
+
+    return this.http.get(this.url, {
+      params: {
+        method: 'get_entry',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }
+    }).toPromise();
+  }
+
+  
+
+  async getEntryFields(module: any, id: string, fields: Array<string>) {
+
+    const args = JSON.stringify({
+      "session": localStorage.getItem("session_id"),
+      "module_name": module,
+      "id": id,
+      "select_fields": fields,
       "link_name_to_fields_array": []
     });
 

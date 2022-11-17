@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { InicioPageRoutingModule } from './inicio-routing.module';
 
 import { InicioPage } from './inicio.page';
+import { NgCalendarModule } from 'ionic2-calendar';
+import { CalendarPageModule } from '../calendar/calendar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    InicioPageRoutingModule
+    InicioPageRoutingModule,
+    NgCalendarModule,
+    CalendarPageModule
   ],
   declarations: [InicioPage]
 })

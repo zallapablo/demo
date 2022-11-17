@@ -1,42 +1,60 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../../services/api.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-documentos',
   templateUrl: './documentos.page.html',
   styleUrls: ['./documentos.page.scss'],
 })
-export class DocumentosPage implements OnInit {
+export class DocumentosPage {
 
   url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
 
-  constructor(private http: HttpClient) { }
+  response: string | Array<Object>;
+  no_registers: string = "";
 
-  async ngOnInit() {
+  constructor(private API: ApiService,
+              private dataService: DataService) { }
+
+  async ionViewWillEnter() {
 
     const fields = [
-      'phone_mobile'
+      "id",
+      "document_name",
+      "filename",
+      "active_date",
+      "category_id",
     ];
+    
+    const c_id = localStorage.getItem("hijo_contact_id");
+    
+    const docs = await this.API.getRelationships("Contacts", c_id, "documents", "", fields);
+    console.log("DOCS", docs);
 
-    const args = JSON.stringify({
-      "session": localStorage.getItem("session_id"),
-      'modules': 'Contacts',
-      'md5': false
-    });
-  
-    const response = await this.http.get(this.url, {
-      params: {
-        method: 'get_language_definition',
-        input_type: 'JSON',
-        response_type: 'JSON',
-        rest_data: args
-      }})
-      .toPromise()
-      .then(res => {
-        console.log(res);
-      });
+    
 
-    console.log(response);
+    if(docs["entry_list"].length == 0) {
+      this.no_registers = "No hay ningún registro.";
+    }
+    else {
+      
+      console.log(docs);
+
+      this.response = this.dataService.transform(docs);
+      console.log("Transformado", this.response);
+
+      console.log(this.response[0][0].name);
+      
+      
+
+      const res = docs["entry_list"][0];
+      console.log(res);
+      
+    }
   }
+
+
 
 }

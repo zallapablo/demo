@@ -51,14 +51,23 @@ const routes: Routes = [
   {
     path: 'asistencias',
     loadChildren: () => import('./pages/asistencias/asistencias.module').then( m => m.AsistenciasPageModule)
-  },  {
+  },
+  {
     path: 'participantes',
     loadChildren: () => import('./pages/participantes/participantes.module').then( m => m.ParticipantesPageModule)
   },
   {
     path: 'password',
     loadChildren: () => import('./pages/password/password.module').then( m => m.PasswordPageModule)
+  },  {
+    path: 'sel-inicial',
+    loadChildren: () => import('./pages/sel-inicial/sel-inicial.module').then( m => m.SelInicialPageModule)
   },
+  {
+    path: 'calendar',
+    loadChildren: () => import('./pages/calendar/calendar.module').then( m => m.CalendarPageModule)
+  },
+
 
 
 ];

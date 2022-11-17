@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagos',
@@ -11,29 +12,11 @@ export class PagosPage implements OnInit {
 
   url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
 
-  constructor(private http: HttpClient) { }
+  constructor(private router: Router,) { }
 
   async ngOnInit() {
 
-    const fields = [
-      
-    ];
-
-    const args = JSON.stringify({
-      session: localStorage.getItem("session_id"),
-      filter: "all"
-    });
-  
-    const response = await this.http.get(this.url, {
-      params: {
-        method: 'get_available_modules',
-        input_type: 'JSON',
-        response_type: 'JSON',
-        rest_data: args
-      }})
-      .toPromise()
-      .then(res => {
-        console.log(res);
-      });
+    //this.router.navigate(["/sel-inicial"]);
   }
+  
 }

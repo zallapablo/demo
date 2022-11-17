@@ -5,6 +5,11 @@
         "redirectTo": "/inicio"
     },
     {
+        "icon":"calendar-outline",
+        "name": "Calendario",
+        "redirectTo": "/calendar"
+    },
+    {
         "icon":"person-outline",
         "name": "Perfil participante",
         "redirectTo": "/perfil-participante"
