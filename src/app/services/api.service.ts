@@ -69,8 +69,6 @@ export class ApiService {
       
       this.router.navigate(["/sel-inicial"]);
     }
-    
-    
   }
 
   async login(userAuth: any) {
@@ -257,16 +255,7 @@ export class ApiService {
     const args = JSON.stringify({
       "session": localStorage.getItem("session_id"),
       "module_name": module,
-      "query": query,
-      /*
-      "order_by": "",
-      "offset": null,
-      "select_fields": fields,
-      "link_name_to_fields_array": null,
-      "max_results": null,
-      "deleted": false,
-      "favorites": false      
-      */      
+      "query": query,   
     });
 
     return this.http.get(this.url, {
@@ -279,13 +268,12 @@ export class ApiService {
     }).toPromise();
   }
 
-//  FALLA CON ERROR 500 EL QUERY4 Y EL RESTO NO !!!!
+
   async getModuleId(query: string) {
 
     const fields = [
       
     ];
-       
 
     const args = JSON.stringify({
       "session": localStorage.getItem("session_id"),
@@ -383,6 +371,28 @@ export class ApiService {
         rest_data: args
       }
     })
-    .toPromise()};
+    .toPromise();
+  }
+  
+  async getDocRevision(id: string) {
+
+    const args = JSON.stringify({
+      "session": localStorage.getItem("session_id"),
+      "id": id
+    });
+
+    return this.http.get(this.url, {
+      params: 
+      {
+        method: 'get_document_revision',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }
+    })
+    .toPromise();
+  }
 }
+
+
 

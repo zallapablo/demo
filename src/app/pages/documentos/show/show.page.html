@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Atrás"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mis documentos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+
+    <ion-item *ngFor="let item of document; index as i">
+      <ion-row size="12">
+        <ion-col size="12">
+          <ion-label style="font-weight: bold;">{{ item.name }}</ion-label>
+        </ion-col>
+        <ion-col size="12">
+          <ion-textarea type="text" autoGrow="true">{{ item.value }}</ion-textarea>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="6">
+      <ion-button (click)="delete()" expand="block"  shape="round" color="danger">
+        Eliminar
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button (click)="download()" expand="block"  shape="round" color="primary">
+        Descargar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

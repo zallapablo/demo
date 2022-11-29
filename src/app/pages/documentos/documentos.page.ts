@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../services/api.service';
 import { DataService } from '../../services/data.service';
+import { NavController } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-documentos',
@@ -12,13 +14,16 @@ export class DocumentosPage {
 
   url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
 
-  response: string | Array<Object>;
+  response: Array<Object>;
   no_registers: string = "";
 
   constructor(private API: ApiService,
-              private dataService: DataService) { }
+              private dataService: DataService,
+              public navCtrl: NavController) { }
 
   async ionViewWillEnter() {
+
+    this.response = null;
 
     const fields = [
       "id",
@@ -45,16 +50,25 @@ export class DocumentosPage {
       this.response = this.dataService.transform(docs);
       console.log("Transformado", this.response);
 
-      console.log(this.response[0][0].name);
-      
-      
-
       const res = docs["entry_list"][0];
-      console.log(res);
-      
+      console.log(res);      
     }
   }
 
+  showDoc(i) {
+    console.log("RRR", this.response[i][0].value);
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          doc: this.response[i][0].value
+      }};
+
+      this.navCtrl.navigateForward(['documentos/show'], navigationExtras);
+  }
+
+  modifyDoc(i) {
+    console.log("Editar doc: ", this.response[i][0].value);
+  }
 
 
 }
