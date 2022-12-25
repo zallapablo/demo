@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { DataService } from '../../../services/data.service';
+import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-show',
@@ -10,10 +12,10 @@ import { DataService } from '../../../services/data.service';
 })
 
 
-
 export class ShowPage {
   doc_id: string;
   document: any;
+  filename: string;
 
   constructor(private route: ActivatedRoute,
               private API: ApiService,
@@ -28,9 +30,9 @@ export class ShowPage {
     });
     
     this.document = await this.getDoc(this.doc_id);
+    this.filename = this.document[0].value;
   }
   
-
   async getDoc(doc_id) {
 
     const fields = [
@@ -62,10 +64,13 @@ export class ShowPage {
 
     const base64 = dl["document_revision"].file;
     console.log(base64);
+
+    const blob = new Blob([atob(base64)], { type: 'application/pdf' });
+
+    saveAs(blob, this.filename);
   }
 
   delete() {
     console.log("Eliminar doc: ", this.doc_id);
   }
-
 }

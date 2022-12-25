@@ -66,6 +66,7 @@ export class ApiService {
     else {
       console.log("Usuario existe");
       localStorage.setItem("contact_id", res["entry_list"][0].id);
+      localStorage.setItem("pa_username_c", username);
       
       this.router.navigate(["/sel-inicial"]);
     }
@@ -392,7 +393,28 @@ export class ApiService {
     })
     .toPromise();
   }
+
+  async setEntry(module: string, list: any) {
+
+    const args = JSON.stringify({
+      "session": localStorage.getItem("session_id"),
+      "module_name": module,
+      "name_value_list": list
+    });
+
+    return this.http.post(this.url, {
+      params:
+      {
+        method: 'set_entry',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }
+    })
+    .toPromise()
+  }
 }
+
 
 
 

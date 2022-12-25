@@ -3,6 +3,8 @@ import { ApiService } from '../../services/api.service';
 import { Router, RouterModule } from '@angular/router';
 import { CalendarComponent } from 'ionic2-calendar';
 
+
+
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.page.html',
@@ -33,5 +35,10 @@ export class InicioPage implements OnInit {
   }
   back() {
     this.myCal.slidePrev();
+  }
+
+  // Selected date reange and hence title changed
+  onViewTitleChanged(title) {
+    this.viewTitle = title;
   }
 }

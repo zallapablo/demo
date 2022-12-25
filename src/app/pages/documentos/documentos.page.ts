@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { DataService } from '../../services/data.service';
 import { NavController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
 
 @Component({
   selector: 'app-documentos',
@@ -66,8 +67,18 @@ export class DocumentosPage {
       this.navCtrl.navigateForward(['documentos/show'], navigationExtras);
   }
 
-  modifyDoc(i) {
-    console.log("Editar doc: ", this.response[i][0].value);
+  newDoc() {
+    this.navCtrl.navigateForward(['documentos/new']);
+  }
+
+  editDoc(i) {
+    
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          doc: this.response[i][0].value
+      }};
+
+      this.navCtrl.navigateForward(['documentos/edit'], navigationExtras);
   }
 
 

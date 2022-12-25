@@ -10,6 +10,14 @@ const routes: Routes = [
   },  {
     path: 'show',
     loadChildren: () => import('./show/show.module').then( m => m.ShowPageModule)
+  },
+  {
+    path: 'edit',
+    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
+  },
+  {
+    path: 'new',
+    loadChildren: () => import('./new/new.module').then( m => m.NewPageModule)
   }
 
 ];
