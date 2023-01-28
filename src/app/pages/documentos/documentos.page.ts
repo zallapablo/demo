@@ -13,8 +13,6 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 })
 export class DocumentosPage {
 
-  url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
-
   response: Array<Object>;
   no_registers: string = "";
 
@@ -38,8 +36,6 @@ export class DocumentosPage {
     
     const docs = await this.API.getRelationships("Contacts", c_id, "documents", "", fields);
     console.log("DOCS", docs);
-
-    
 
     if(docs["entry_list"].length == 0) {
       this.no_registers = "No hay ningún registro.";

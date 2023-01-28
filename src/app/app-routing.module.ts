@@ -59,7 +59,8 @@ const routes: Routes = [
   {
     path: 'password',
     loadChildren: () => import('./pages/password/password.module').then( m => m.PasswordPageModule)
-  },  {
+  },
+  {
     path: 'sel-inicial',
     loadChildren: () => import('./pages/sel-inicial/sel-inicial.module').then( m => m.SelInicialPageModule)
   },
