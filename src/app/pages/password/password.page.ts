@@ -15,34 +15,60 @@ export class PasswordPage implements OnInit {
               private dataService: DataService) { }
 
   async ngOnInit() {
-    
+    const contact = localStorage.getItem("contact_id")
+    console.log(contact);
+
+    const np = await this.API.getEntryFields("Contacts", localStorage.getItem("contact_id"), ["pa_password_c"])
+    console.log(np);
   }
 
-  async changePassword(p0, p1, p2) {
+  async changePassword(p0: string, p1: any, p2: any) {
 
     const pa = this.dataService.singleTransform(await this.API.getEntryFields("Contacts", localStorage.getItem("contact_id"), ["pa_password_c"]))
     console.log(pa);
+
+    //console.log(typeof(p1));
     
     if(p0 == String(pa[0].value)) {
       console.log("COntraseña antighua correcta");
 
       if(p1 == p2) {
 
-        const list = {
-          pa_username_c: localStorage.getItem("pa_username_c"),
-          pa_password_c: p1
-        }
+        console.log("Las contraseñas coinciden: ", p1);
 
-        const ch = await this.API.setEntry("Contacts", list);
-        console.log(ch);
+        const contact = localStorage.getItem("contact_id")
+        
+        const list = [
+          { name: 'id', value: contact },
+          { name: 'pa_password_c', value: p1 }
+        ];
+
+        console.log(list);
+        
+
+        const list2 = {
+
+          "id": 
+            {
+              "name": "id",
+              "value": localStorage.getItem("contact_id")
+            },
+          "name":
+            {
+              "name": "pa_password_c",
+              "value": p1
+            }
+        }
+        
+
+        await this.API.setEntry("Contacts", list)
+        //await this.API.setEntry2("Contacts", list)
 
         const np = await this.API.getEntryFields("Contacts", localStorage.getItem("contact_id"), ["pa_password_c"])
         console.log(np);
-
       }
       else{
         console.log("Las contraseñas no coindicen");
-        
       }
     }
     else {

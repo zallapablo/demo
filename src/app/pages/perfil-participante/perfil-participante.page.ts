@@ -11,6 +11,8 @@ import { DataService } from '../../services/data.service';
 export class PerfilParticipantePage  {
 
   response: any;
+  direccion: any;
+  adicional: any;
   url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
 
   constructor(private API: ApiService,
@@ -30,11 +32,17 @@ export class PerfilParticipantePage  {
       "birthdate",
       "email1",
       "curso_escolar_c",
+    ];
+
+    const direccion = [
       "bosco_tipovia_c",
       "primary_address_street",
       "primary_address_city",
       "primary_address_state",
       "primary_address_postalcode",
+    ];
+
+    const adicional = [
       "bosco_descripcio_allergies_c",
       "bosco_descripcio_intoler_c",
       "bosco_descripcio_tratam_c",
@@ -42,16 +50,19 @@ export class PerfilParticipantePage  {
       "bosco_descripcio_otros_c"
     ];
 
-    /*
-    const res = await this.API.getRelationships("stic_Personal_Environment", id, link, "", fields);
-    console.log(res);
-    */
-    const c_id = localStorage.getItem("hijo_contact_id");
-    const res = await this.API.getEntryFields("Contacts", c_id, fields);
-    console.log(res);
     
+    const c_id = localStorage.getItem("hijo_contact_id");
+    const res1 = await this.API.getEntryFields("Contacts", c_id, fields);
+    console.log(res1);
 
-    this.response = this.dataService.singleTransform(res);
-    console.log(this.response);
+    const res2 = await this.API.getEntryFields("Contacts", c_id, direccion);
+    console.log(res2);
+
+    const res3 = await this.API.getEntryFields("Contacts", c_id, adicional);
+    console.log(res3);
+
+    this.response = this.dataService.singleTransform(res1);
+    this.direccion = this.dataService.singleTransform(res2);
+    this.adicional = this.dataService.singleTransform(res3);
   }
 }

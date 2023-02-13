@@ -5,11 +5,6 @@
         "redirectTo": "/inicio"
     },
     {
-        "icon":"calendar-outline",
-        "name": "Calendario",
-        "redirectTo": "/calendar"
-    },
-    {
         "icon":"person-outline",
         "name": "Perfil participante",
         "redirectTo": "/perfil-participante"
@@ -28,6 +23,11 @@
         "icon":"reader-outline",
         "name": "Inscripciones",
         "redirectTo": "/inscripciones"
+    },
+    {
+        "icon":"apps-outline",
+        "name": "Sesiones",
+        "redirectTo": "/sesiones"
     },
     {
         "icon":"checkmark-circle-outline",
@@ -53,6 +53,10 @@
         "icon":"lock-open-outline",
         "name": "Cambiar contraseña",
         "redirectTo": "/password"
+    },
+    {
+        "icon":"person-remove-outline",
+        "name": "Darse de baja",
+        "redirectTo": "/baja"
     }
-
 ]

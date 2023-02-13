@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { DataService } from '../../services/data.service';
+import {formatDate} from '@angular/common';
+import { NavController } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-actividades',
@@ -11,62 +14,51 @@ import { DataService } from '../../services/data.service';
 export class ActividadesPage implements OnInit {
 
   response: Array<Object>;
-
-  url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
+  no_registers: string = "";
 
   constructor(
     private dataService: DataService,
-    private API: ApiService) { }
+    private API: ApiService,
+    private navCtrl: NavController) { }
 
   async ngOnInit() {
 
-    this.getAct()
-
+    /*
     const act = await this.API.getEntryList("stic_Events", "");
     console.log("Lista actividades: ", act);
+    */
 
-    const aun_api = await this.API.getEntryFields("Contacts", localStorage.getItem("contact_id"), ["assigned_user_name"])
+    const aui_api = await this.API.getEntryFields("Contacts", localStorage.getItem("contact_id"), ["assigned_user_id"])
+    const aui = this.dataService.singleTransform(aui_api)[0].value;
+    //console.log("Centro de la persona:", aui);
 
-    const aun = this.dataService.singleTransform(aun_api)[0].value;
-    //console.log("Centro de la persona:", aun);
+    const date = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+    console.log("FECHA: ", date);
+    
 
-
-    const query = "assigned_user_name='" + aun + "'"
+    const fields = [
+      "id",
+      "name"
+    ]
+    
+    const query = "stic_events.assigned_user_id='" + aui + "' and stic_events.status='registration' and stic_events.end_date>='" + date + "'";
     console.log(query);
 
-    const final_query = "assigned_user_name='" + aun.replace(/\s/g, "") + "'"
-    console.log("FINAL QUERY: ", final_query);
-    const def = await this.API.getEntryList("stic_Events", final_query)
-    console.log("DEF :", def);
-
-
-    const acts = await this.API.getEntryList("stic_Events", query)
+    const acts = await this.API.getEntryListFields("stic_Events", query, fields);
     console.log("Acts 0 :", acts);
 
-
-
-
-    const query1 = "assigned_user_name='Centro1'"
-    console.log("Query 1: ", query1);
-
-    const acts1 = await this.API.getEntryList("stic_Events", query1)
-    console.log("Acts 1 :", acts1);
-
-
-
-    const query2 = "assigned_user_name = 'Centro 1'"
-    console.log("Query2: ", query2);
+    if(acts["entry_list"].length == 0) {
+      this.no_registers = "No hay ningún registro.";
+    }
+    else {
+      this.response = this.dataService.transform(acts);
+      console.log("Transformado", this.response);
     
-    const acts2 = await this.API.getEntryList("stic_Events", query2)
-    console.log("Acts 2", acts2);
-
-
-    const id = localStorage.getItem("contact_id");
-    const hijo_id = localStorage.getItem("hijo_contact_id")
-
-    const rel = await this.API.getRelationships("Contacts", hijo_id, "stic_registrations_contacts", "", ["id", "name"]);
-    console.log("RELACIOBN:", rel);
-    
+      //console.log("EL NAME: ", this.response[0]);
+      
+      const res = acts["entry_list"][0];
+      //console.log("RES", res);      
+    }
   }
 
   async getAct() {
@@ -74,4 +66,18 @@ export class ActividadesPage implements OnInit {
     console.log("CON ID", act);
     
   }
+
+  showActividad(i) {
+    console.log("RRR", this.response[i][3]);
+
+    
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          id: this.response[i][3].value
+      }};
+
+      this.navCtrl.navigateForward(['actividades/show'], navigationExtras);
+  }
+
+  
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
@@ -269,6 +269,25 @@ export class ApiService {
     }).toPromise();
   }
 
+  async getEntryListFields(module: any, query: any, fields: string []) {
+
+    const args = JSON.stringify({
+      "session": localStorage.getItem("session_id"),
+      "module_name": module,
+      "query": query,   
+      "select_fields": fields
+    });
+
+    return this.http.get(this.url, {
+      params: {
+        method: 'get_entry_list',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }
+    }).toPromise();
+  }
+
 
   async getModuleId(query: string) {
 
@@ -399,19 +418,36 @@ export class ApiService {
     const args = JSON.stringify({
       "session": localStorage.getItem("session_id"),
       "module_name": module,
-      "name_value_list": list
+      "entry_list": list
     });
 
-    return this.http.post(this.url, {
+    this.http.post(this.url, {
       params:
       {
         method: 'set_entry',
         input_type: 'JSON',
-        response_type: 'JSON',
+        response_type: 'text',
         rest_data: args
       }
     })
     .toPromise()
+  }
+
+  async setEntry2(module: string, list: any) {
+
+    const params = new HttpParams()
+      .set('method', 'set_entry')
+      .set('input_type', 'JSON')
+      .set('response_type', 'text')
+      .set('rest_data', JSON.stringify({
+        "session": localStorage.getItem("session_id"),
+        "module_name": module,
+        "entry_list": list
+      }));
+
+    this.http.post(this.url, { params }).subscribe((response) => {
+      console.log(response);
+    });
   }
 }
 

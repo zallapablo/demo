@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button menu="first" color="corp2"></ion-menu-button>
+      </ion-buttons>
+
+    <ion-title>Darse de baja</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+  <h1>Darse de baja</h1>
+
+  <ion-text color="danger" class="ion-margin-top">
+    Al dar de baja su usuario no podrá volver a acceder al área privada.
+  </ion-text>
+
+  <ion-button (click)="delete()" expand="block" shape="round" color="corp1" class="ion-margin-top">
+
+    <ion-text color="corp2">
+      Darse de baja
+    </ion-text>
+  </ion-button>
+
+</ion-content>

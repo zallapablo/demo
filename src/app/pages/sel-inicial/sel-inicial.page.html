@@ -16,6 +16,7 @@
 
   <h1>Selecciona participante</h1>
 
+  <!--
   <ion-list>
 
     <ion-item ion-item *ngFor="let hijo of hijos; let i=index">
@@ -27,5 +28,17 @@
     </ion-item>
 
   </ion-list>
+  -->
+
+  <ion-grid fixed *ngFor="let item of response; index as i">
+
+    <ion-button (click)="SelectClicked(item[0].value)" expand="block" color="corp1" border-color="corp2">
+      <ion-text color="corp2">
+        {{item[1].value}}
+      </ion-text>
+      
+    </ion-button>
+
+  </ion-grid>
 
 </ion-content>

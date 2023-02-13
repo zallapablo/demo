@@ -38,7 +38,6 @@ export class InscripcionesPage {
       this.no_registers = "No hay ningún registro.";
     }
     else {
-
       this.response = this.dataService.transform(ins);
       console.log("Transformado", this.response);
     

@@ -67,7 +67,15 @@ const routes: Routes = [
   {
     path: 'calendar',
     loadChildren: () => import('./pages/calendar/calendar.module').then( m => m.CalendarPageModule)
+  },  {
+    path: 'sesiones',
+    loadChildren: () => import('./pages/sesiones/sesiones.module').then( m => m.SesionesPageModule)
   },
+  {
+    path: 'baja',
+    loadChildren: () => import('./pages/baja/baja.module').then( m => m.BajaPageModule)
+  },
+
 
 
 

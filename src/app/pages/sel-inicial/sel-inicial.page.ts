@@ -11,7 +11,8 @@ import { MenuController } from '@ionic/angular';
 })
 export class SelInicialPage implements OnInit {
 
-  hijos: any;
+  //hijos: any;
+  response: any;
 
   constructor(private dataService: DataService,
               private API: ApiService,
@@ -21,8 +22,10 @@ export class SelInicialPage implements OnInit {
   async ngOnInit() {
 
     const res = await this.getHijos();
-    this.hijos = res['entry_list'];
-    console.log(this.hijos);
+    //this.hijos = res['entry_list'];
+
+    this.response = this.dataService.transform(res);
+    console.log(this.response);
   }
 
   async saveContactId(sel: string) {
@@ -44,10 +47,16 @@ export class SelInicialPage implements OnInit {
 
   async getHijos() {
     const c_id = localStorage.getItem("contact_id");
-    const all_fields = await this.dataService.getAllFields("stic_Personal_Environment");
+    //const all_fields = await this.dataService.getAllFields("stic_Personal_Environment");
+
+    const fields = [
+      "id",
+      "stic_personal_environment_contacts_1_name"
+    ]
+
     const query = "(relationship_type = 'father' OR relationship_type = 'mother' OR relationship_type = 'legal')";
     
-    const res = await this.API.getRelationships("Contacts", c_id, "stic_personal_environment_contacts", query, all_fields);
+    const res = await this.API.getRelationships("Contacts", c_id, "stic_personal_environment_contacts", query, fields);
     
     return res;
   }

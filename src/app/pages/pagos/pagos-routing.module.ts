@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: PagosPage
+  },  {
+    path: 'show',
+    loadChildren: () => import('./show/show.module').then( m => m.ShowPageModule)
   }
+
 ];
 
 @NgModule({

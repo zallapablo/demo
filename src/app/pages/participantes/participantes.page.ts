@@ -10,13 +10,14 @@ import { DataService } from '../../services/data.service';
   templateUrl: './participantes.page.html',
   styleUrls: ['./participantes.page.scss'],
 })
-export class ParticipantesPage implements OnInit {
+export class ParticipantesPage {
 
-  hijos: any;
+  //hijos: any;
+  response: any;
 
-  constructor(private API: ApiService, 
-              private dataService: DataService,
-              ) { }
+  constructor(
+    private API: ApiService, 
+    private dataService: DataService) { }
 
 
   async SelectClicked(sel: string) {
@@ -30,30 +31,39 @@ export class ParticipantesPage implements OnInit {
 
   async saveContactId(sel: string) {
     const res = await this.API.getRelationships("stic_Personal_Environment", sel, "stic_personal_environment_contacts_1", "", ["id"]);
+    console.log("RESPUESTA: ", res);
+    
     const c_id = res["entry_list"][0]["id"];
     
     localStorage.setItem("hijo_contact_id", c_id);    
-
-    console.log(localStorage.getItem("hijo_contact_id"));
-    
+    console.log("ID del hijo guardado: ", localStorage.getItem("hijo_contact_id"));
   }
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
 
-    console.log(await this.API.getModuleFields("stic_Personal_Environment",""));
     const res = await this.getHijos();
     console.log("Respuesta hijos ", res);
 
-    this.hijos = res['entry_list'];
+    this.response = this.dataService.transform(res);
+    console.log(this.response);
+
+    //this.hijos = res['entry_list'];
   }
 
   async getHijos() {
     
     const c_id = localStorage.getItem("contact_id");
-    const all_fields = await this.dataService.getAllFields("stic_Personal_Environment");
+    //const all_fields = await this.dataService.getAllFields("stic_Registrations");
+
+    const fields = [
+      "id",
+      "stic_personal_environment_contacts_1_name"
+    ]
+
     const query = "(relationship_type = 'father' OR relationship_type = 'mother' OR relationship_type = 'legal')";
     
-    const res = await this.API.getRelationships("Contacts", c_id, "stic_personal_environment_contacts", query, all_fields);
+    const res = await this.API.getRelationships("Contacts", c_id, "stic_personal_environment_contacts", query, fields);
+    console.log(res);
     
     return res;
   }
