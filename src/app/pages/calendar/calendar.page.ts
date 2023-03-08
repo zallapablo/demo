@@ -7,6 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarPage implements OnInit {
 
+  calendar = {
+    mode: 'month',
+    currentDate: new Date()
+  };
+
+  viewTitle: string;
+
+   
+
+
+
   constructor() { }
 
   ngOnInit() {

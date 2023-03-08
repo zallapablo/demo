@@ -19,10 +19,13 @@
       </ion-col>
       <ion-col size="12">
         
-        <ion-button (click)="upload()" expand="block" fill="clear" shape="round">
-          Examinar
+        <!--
+        <ion-button expand="block" fill="clear" shape="round">
+          <ion-label></ion-label>
         </ion-button>
-        
+        -->
+
+      <input type="file" (change)="upload($event)" id="file-input" accept="pdf">
 
       </ion-col>
     </ion-row>

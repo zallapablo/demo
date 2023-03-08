@@ -10,18 +10,16 @@
 <ion-content class="ion-padding">
 
   <ion-list>
-
-    <ion-item *ngFor="let item of actividad; index as i">
+    <ion-item *ngFor="let act of actividad | keyvalue: unsorted">
       <ion-row size="12">
         <ion-col size="12">
-          <ion-label style="font-weight: bold;">{{ item.name }}</ion-label>
+          <ion-label style="font-weight: bold;">{{ act.key }}</ion-label>
         </ion-col>
         <ion-col size="12">
-          <ion-label type="text" class="ion-text-wrap">{{ item.value }}</ion-label>
+          <ion-label type="text" class="ion-text-wrap">{{ act.value }}</ion-label>
         </ion-col>
       </ion-row>
     </ion-item>
-
   </ion-list>
 
   <ion-button (click)="inscribir()" expand="block" shape="round" color="corp1" class="ion-margin-top">

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Router, RouterModule } from '@angular/router';
 import { CalendarComponent } from 'ionic2-calendar';
+import { ModalController } from '@ionic/angular';
 
 
 
@@ -23,7 +24,8 @@ export class InicioPage implements OnInit {
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(private API: ApiService,
-              private router: Router) { }
+              private router: Router,
+              private modalCtrl: ModalController) { }
 
   ngOnInit() {
 
@@ -40,5 +42,10 @@ export class InicioPage implements OnInit {
   // Selected date reange and hence title changed
   onViewTitleChanged(title) {
     this.viewTitle = title;
+  }
+
+  onTimeSelected(ev) {
+    console.log(ev);
+    
   }
 }

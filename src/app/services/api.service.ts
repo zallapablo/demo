@@ -1,8 +1,10 @@
+import { formatDate } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +39,12 @@ export class ApiService {
     
   async loginAPI(args: any) {
 
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    }
+
     await this.http.get(this.url, {
 
       params: {
@@ -44,7 +52,8 @@ export class ApiService {
         input_type: 'JSON',
         response_type: 'JSON',
         rest_data: args
-      }})
+      }}
+      )
       .toPromise()
       .then(res => {
         console.log("RES: ", res);
@@ -76,7 +85,14 @@ export class ApiService {
 
     //const ID = localStorage.getItem("user_id");
 
-    const args = JSON.stringify({ 'user_auth': userAuth, 'application_name': null });
+    const list = [
+      {
+        "name": "language",
+        "value": "es_ES"
+      }
+    ]
+
+    const args = JSON.stringify({ 'user_auth': userAuth, 'application_name': null, 'name_value_list': list });
     
     const response = await this.http.get(this.url, {
       params: {
@@ -275,6 +291,8 @@ export class ApiService {
       "session": localStorage.getItem("session_id"),
       "module_name": module,
       "query": query,   
+      "order_by": null,
+      "offset": null,
       "select_fields": fields
     });
 
@@ -338,12 +356,12 @@ export class ApiService {
       
   }
 
-  async getRelationships(module: string, id: string, link: string, query: string, fields: Array<string>) {
+  async getRelationships(moduleName: string, id: string, link: string, query: string, fields: Array<string>) {
 
     
     const args = JSON.stringify({
       "session": localStorage.getItem("session_id"),
-      "module_name": module,
+      "module_name": moduleName,
       "module_id": id,
       "link_field_name": link,
       "related_module_query": query,
@@ -413,41 +431,63 @@ export class ApiService {
     .toPromise();
   }
 
-  async setEntry(module: string, list: any) {
+  async getActividad( fields) {
+
+    const aui_api = await this.getEntryFields("Contacts", localStorage.getItem("contact_id"), ["assigned_user_id"]);
+    const aui = this.singleTransform(aui_api)[0].value;
+    const date = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+    const query = "stic_events.assigned_user_id='" + aui + "' and stic_events.status='registration' and stic_events.end_date>='" + date + "'";
+    
+    return await this.getEntryListFields("stic_Events", query, fields);
+  }
+
+  async setEntry(moduleName: string, list: any) {
 
     const args = JSON.stringify({
       "session": localStorage.getItem("session_id"),
-      "module_name": module,
-      "entry_list": list
+      "module_name": moduleName,
+      "name_value_list": list,
+      "track_view": false
     });
 
-    this.http.post(this.url, {
+    this.http.get(this.url, {
       params:
       {
         method: 'set_entry',
         input_type: 'JSON',
-        response_type: 'text',
+        response_type: 'JSON',
         rest_data: args
       }
     })
     .toPromise()
   }
 
-  async setEntry2(module: string, list: any) {
 
-    const params = new HttpParams()
-      .set('method', 'set_entry')
-      .set('input_type', 'JSON')
-      .set('response_type', 'text')
-      .set('rest_data', JSON.stringify({
-        "session": localStorage.getItem("session_id"),
-        "module_name": module,
-        "entry_list": list
-      }));
+  singleTransform(object: Object) {
 
-    this.http.post(this.url, { params }).subscribe((response) => {
-      console.log(response);
+    return Object.keys(object['entry_list'][0]['name_value_list']).map(key => ({
+      name: object['entry_list'][0]['name_value_list'][key]['name'],
+      value: object['entry_list'][0]['name_value_list'][key]['value']
+    }));
+  }
+
+  async getLanguageDefinition(modules: any) {
+    const args = JSON.stringify({
+      "session": localStorage.getItem("session_id"),
+      "modules": modules,
+      "MD5": false
     });
+
+    return this.http.get(this.url, {
+      params:
+      {
+        method: 'get_language_definition',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }
+    })
+    .toPromise();
   }
 }
 

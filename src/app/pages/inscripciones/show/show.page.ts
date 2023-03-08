@@ -13,6 +13,8 @@ export class ShowPage {
   inscripcion_id: string;
   inscripcion: any;
 
+  unsorted() {}
+
   constructor(
     private route: ActivatedRoute,
     private API: ApiService,
@@ -35,16 +37,19 @@ export class ShowPage {
     const fields = [
       "stic_registrations_stic_events_name",
       "stic_registrations_contacts_name",
-      "registration_date"
+      "registration_date",
+      "ccjdbe_color_prenda_c",
+      "ccjdbe_talla_c"
     ];
-/*
-    const doc = await this.API.getEntryFields("Documents", id, fields);
-    console.log(doc);
-*/
-    const insc = await this.API.getEntryId("stic_Registrations", id);
-    //console.log(insc);
 
-    return this.dataService.singleTransform(insc);   
+    const insc = await this.API.getEntryFields("stic_Registrations", id, fields);
+    console.log(insc);
+
+    const resp = this.dataService.getLabels("stic_Registrations", fields, insc);
+    console.log(resp);
+
+    return resp;
+    //return this.dataService.singleTransform(insc);   
   }
 
 }

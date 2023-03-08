@@ -24,10 +24,16 @@ export class InscripcionesPage {
 
     const fields = [
       "id",
-      "name"
+      "name",
+      "ccjdbe_color_prenda_c",
+      "ccjdbe_talla_c"
     ];
 
     const all_fields = await this.dataService.getAllFields("stic_Registrations");
+    
+    const mf = await this.API.getModuleFields("stic_Registrations", all_fields)
+    console.log("ALL FIELDS: ", mf);
+    
 
     const c_id = localStorage.getItem("hijo_contact_id");
 

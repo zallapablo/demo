@@ -1,7 +1,9 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { DataService } from '../../services/data.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-sesiones',
@@ -10,9 +12,13 @@ import { DataService } from '../../services/data.service';
 })
 export class SesionesPage {
 
+  response: Array<Object>;
+  no_registers: string = "";
+
   constructor(
     private API: ApiService,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private navCtrl: NavController) { }
 
   async ionViewWillEnter() {
 
@@ -29,20 +35,28 @@ export class SesionesPage {
 
     const all_fields = await this.dataService.getAllFields("stic_Registrations");
 
-    const ses1 = await this.API.getRelationships("Contacts", c_id, "stic_registrations_contacts", "", all_fields);
-    console.log("RELACION contacts y sesiones:", ses1);
+    const sesion = await this.API.getRelationships("stic_Events", "876ad600-dce8-25c6-e6d8-6389bc748059", "stic_sessions_stic_events", "", fields);
+    console.log("LA PUTA SESION: ", sesion);
 
-    const ses2 = await this.API.getRelationships("Contacts", hijo_id, "stic_registrations_contacts", "", all_fields);
-    console.log("RELACION contacts y sesiones:", ses2);
-
-    const sesion = await this.API.getRelationships("stic_Events", "876ad600-dce8-25c6-e6d8-6389bc748059", "stic_sessions_stic_events", "", all_fields);
-    console.log("LA PUITA SESION: ", sesion);
+    if(sesion["entry_list"].length == 0) {
+      this.no_registers = "No hay ningún registro.";
+    }
+    else {
+      this.response = this.dataService.transform(sesion);
+      console.log("Transformado", this.response);
+    }
   }
 
-  async getSesion(id: string) {
+  showSesion(i) {
+    console.log("RRR", this.response[i][0].value);
 
-    const sesion = await this.API.getRelationships("stic_Events", id, "stic_sessions_stic_events", "", [])
-    console.log(sesion);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          id: this.response[i][0].value
+      }};
+
+      this.navCtrl.navigateForward(['sesiones/show'], navigationExtras);
   }
+
 
 }

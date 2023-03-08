@@ -51,7 +51,8 @@
     [eventSource]="eventSource"
     [calendarMode]="calendar.mode"
     [currentDate]="calendar.currentDate"
-    (onTitleChanged)="onViewTitleChanged($event)">
+    (onTitleChanged)="onViewTitleChanged($event)"
+    (onTimeSelected)="onTimeSelected($event)">
   </calendar>
   
 

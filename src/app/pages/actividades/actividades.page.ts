@@ -44,7 +44,7 @@ export class ActividadesPage implements OnInit {
     const query = "stic_events.assigned_user_id='" + aui + "' and stic_events.status='registration' and stic_events.end_date>='" + date + "'";
     console.log(query);
 
-    const acts = await this.API.getEntryListFields("stic_Events", query, fields);
+    const acts = await this.API.getEntryListFields("stic_Events", query, []);
     console.log("Acts 0 :", acts);
 
     if(acts["entry_list"].length == 0) {

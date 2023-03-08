@@ -14,12 +14,12 @@ import { ApiService } from '../../services/api.service';
 })
 export class LoginPage {
 
-  email: string;
-  password: string;
-  postId: any;
+  email: string = "";
+  password: string = "";
+  postId: any = "";
 
-  user_id: string;
-  session_id: string;
+  user_id: string = "";
+  session_id: string = "";
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -43,21 +43,35 @@ export class LoginPage {
 
     const appName = null;
 
+    
+
     const userAuth = {  
       user_name: "pablozalla",
       password: Md5.hashStr("pablozalla")
     }
 
-    const args = JSON.stringify({ 'user_auth': userAuth, 'application_name': appName });
+    const args = JSON.stringify({ 
+      'user_auth': userAuth, 
+      'application': appName,
+      'name_value_list': [
+        {
+          "name": "language",
+          "value": "es_ES"
+        }
+      ] 
+    });
     
     await this.API.loginAPI(args);
   }
-
 
   async loginArea() {
 
     const res = await this.API.loginArea(this.email, this.password);
     //console.log("RES", res);
 
+  }
+
+  forgot() {
+    this.router.navigate(["/login/forgot"]);
   }
 }

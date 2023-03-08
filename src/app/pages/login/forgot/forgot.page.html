@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Atrás"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Restablecer</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+      
+        <ion-item>
+          <ion-label position="floating">Nombre del usuario</ion-label>
+          <ion-input name="user"
+                      type="user"
+                      required
+                      [(ngModel)]="user"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Email del usuario</ion-label>
+          <ion-input name="email"
+                      type="email"
+                      required
+                      [(ngModel)]="email"></ion-input>
+        </ion-item>
+    
+        
+        <ion-button (click)="send(user, email)" expand="block" shape="round" color="corp2" class="ion-margin-top"
+                    [disabled]="!email || !user">
+          Enviar
+        </ion-button>
+        
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

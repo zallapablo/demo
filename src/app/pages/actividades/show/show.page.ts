@@ -13,6 +13,8 @@ export class ShowPage {
   id_actividad: string;
   actividad: any;
 
+  unsorted() {}
+
   constructor(
     private route: ActivatedRoute,
     private API: ApiService,
@@ -47,9 +49,14 @@ export class ShowPage {
     console.log(doc);
 */
     const act = await this.API.getEntryFields("stic_Events", id, fields);
-    //console.log(insc);
+    console.log(act);
 
-    return this.dataService.singleTransform(act);   
+    const resp = await this.dataService.getLabels("stic_Events", fields, act);
+    console.log(resp);
+
+    return resp;
+
+    //return this.dataService.singleTransform(act);   
   }
 
   inscribir() {

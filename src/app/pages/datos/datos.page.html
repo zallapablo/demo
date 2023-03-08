@@ -43,14 +43,29 @@
 -->
   <ion-list class="ion-margin-top">
     <ion-item>
+
+      <!--
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input> 
+        <ion-label>
+          {{ first_name }}
+        </ion-label> 
+      </ion-input>
+
+    -->
+
+      
       <ion-row size="12">
         <ion-col size="12">
           <ion-label style="font-weight: bold;">Nombre</ion-label>
         </ion-col>
         <ion-col size="12">
-          <ion-input> {{ first_name }} </ion-input>
+          <ion-input class="ion-text-wrap"> {{ first_name }} </ion-input> 
+
+          <ion-textarea [autoGrow]="false" value="aaaaaaaaa{{ first_name }}">  </ion-textarea>
         </ion-col>
       </ion-row>
+      
     </ion-item>
 
     <ion-item>

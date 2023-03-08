@@ -26,7 +26,7 @@ registerLocaleData(localeEs);
   declarations: [InicioPage],
   providers: [
     {
-      provide: LOCALE_ID, useValue: 'es'
+      provide: LOCALE_ID, useValue: 'es-ES'
     }
   ]    
 })

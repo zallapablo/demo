@@ -18,10 +18,15 @@
     <ion-label >{{ no_registers }}</ion-label>
 
     <ion-grid fixed *ngFor="let item of response; index as i">
-        <ion-row>
-            <ion-col size="12">{{ i+1 }} ) {{ item[4].value }} </ion-col>
+        <ion-row (click)="showActividad(i)">
+            <ion-col size="12">
+                <ion-text color="primary">
+                    <p>{{ i+1 }} ) {{ item[4].value }}</p>
+                </ion-text> 
+            </ion-col>
         </ion-row>
     
+        <!--
         <ion-row>
             <ion-col size="12">
                 <ion-button (click)="showActividad(i)" expand="block" fill="clear" shape="round">
@@ -29,6 +34,7 @@
                 </ion-button>
             </ion-col>
         </ion-row>
+        -->
     </ion-grid>
 
 </ion-content>

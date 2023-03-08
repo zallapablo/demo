@@ -1,33 +1,69 @@
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <img src="/assets/img/sdb-logo-big.png">
+  <ion-text color="corp2" class="titulo">
+    <h1>Área privada</h1>
+  </ion-text>
 
-  <ion-list>
-    
-  
-  
-    <ion-item>
-      <ion-label position="floating">Usuario</ion-label>
-      <ion-input name="email"
-                  type="email"
-                  required
-                  [(ngModel)]="email"></ion-input>
-    </ion-item>
+  <!-- 
+    <ion-img id="logo_confe" [src]="/assets/img/sdb-logo-big.png" alt=""> -
+    src\assets\img\LogoRGB_CDB_horizontal.png
+    </ion-img>
+  -->
 
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input name="password"
-                  type="password"
-                  required
-                  [(ngModel)]="password"></ion-input>
-    </ion-item>
+  <img alt="logo_confe" src="/assets/img/LogoRGB_CDB_horizontal.png"/>
+
+  <ion-card>
 
     
-    <ion-button (click)="login()" expand="block" shape="round" color="corp2" class="ion-margin-top"
-                [disabled]="!email || !password">
-      Iniciar sesión
-    </ion-button>
 
-  </ion-list>
+    <ion-card-header>
+      <ion-card-title>Accede</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+    
+        <ion-item>
+          <ion-label position="floating">Usuario</ion-label>
+          <ion-input name="email"
+                      type="email"
+                      required
+                      [(ngModel)]="email"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input name="password"
+                      type="password"
+                      required
+                      [(ngModel)]="password"></ion-input>
+        </ion-item>
+    
+        
+        <ion-button (click)="login()" expand="block" shape="round" color="corp1" class="ion-margin-top"
+                    [disabled]="!email || !password">
+          <ion-text color="corp2">
+            <h2>Iniciar sesión</h2>
+          </ion-text>
+                    
+        </ion-button>
+        
+        <ion-grid  class="ion-margin-top ion-text-center">
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="comp2" class="ion-text-center" (click)="forgot()">
+                <p class="underline">¿Olvidó la contraseña? Haga clic aquí.</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  
+  
 
 </ion-content>

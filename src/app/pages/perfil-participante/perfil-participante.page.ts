@@ -50,7 +50,6 @@ export class PerfilParticipantePage  {
       "bosco_descripcio_otros_c"
     ];
 
-    
     const c_id = localStorage.getItem("hijo_contact_id");
     const res1 = await this.API.getEntryFields("Contacts", c_id, fields);
     console.log(res1);
@@ -64,5 +63,14 @@ export class PerfilParticipantePage  {
     this.response = this.dataService.singleTransform(res1);
     this.direccion = this.dataService.singleTransform(res2);
     this.adicional = this.dataService.singleTransform(res3);
+
+    const lang = await this.API.getLanguageDefinition(["app_list_strings"]);
+    console.log("LANG: ", lang);
+
+    const lang2 = await this.API.getLanguageDefinition(["Contacts"]);
+    console.log("LANG: ", lang2);
+    
+    const mf_fields = await this.API.getModuleFields("Contacts", fields)
+    console.log("FIELDS: ", mf_fields);    
   }
 }
