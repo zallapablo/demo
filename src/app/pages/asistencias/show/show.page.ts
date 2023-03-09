@@ -11,7 +11,9 @@ import { DataService } from 'src/app/services/data.service';
 export class ShowPage {
 
   asist_id: string;
-  asist: any;
+  asistances: any;
+
+  unsorted() {}
 
   constructor(
     private route: ActivatedRoute,
@@ -27,8 +29,8 @@ export class ShowPage {
       console.log("param", params["id"]);
     });
 
-    this.asist = await this.getAsist(this.asist_id);
-    console.log("PRINT ", this.asist);
+    this.asistances = await this.getAsist(this.asist_id);
+    console.log("PRINT ", this.asistances);
   }
 
   async getAsist(id: string) {
@@ -45,10 +47,13 @@ export class ShowPage {
     const asist = await this.API.getEntryFields("stic_Attendances", id, fields);
     console.log(asist);
 
-    //const ses = await this.API.getEntryId("stic_Sessions", id);
-    console.log(asist);
+    const resp = await this.dataService.getLabels("stic_Attendances", fields, asist, "IAsistencia");
+    console.log(resp);
 
-    return this.dataService.singleTransform(asist);   
+    return resp;
+
+    //const ses = await this.API.getEntryId("stic_Sessions", id);
+    //return this.dataService.singleTransform(asist);   
   }
 
 }

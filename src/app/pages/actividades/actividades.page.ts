@@ -78,6 +78,4 @@ export class ActividadesPage implements OnInit {
 
       this.navCtrl.navigateForward(['actividades/show'], navigationExtras);
   }
-
-  
 }

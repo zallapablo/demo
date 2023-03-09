@@ -13,6 +13,8 @@ export class ShowPage {
   sesion_id: string;
   sesion: any;
 
+  unsorted() {}
+
   constructor(
     private route: ActivatedRoute,
     private API: ApiService,
@@ -43,10 +45,15 @@ export class ShowPage {
     const ses = await this.API.getEntryFields("stic_Sessions", id, fields);
     console.log(ses);
 
-    //const ses = await this.API.getEntryId("stic_Sessions", id);
-    console.log(ses);
+    const resp = await this.dataService.getLabels("stic_Sessions", fields, ses, "caile");
+    console.log(resp);
 
-    return this.dataService.singleTransform(ses);   
+    return resp;
+
+    //const ses = await this.API.getEntryId("stic_Sessions", id);
+    //console.log(ses);
+
+    //return this.dataService.singleTransform(ses);   
   }
 
 }

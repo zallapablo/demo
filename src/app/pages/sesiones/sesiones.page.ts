@@ -36,7 +36,7 @@ export class SesionesPage {
     const all_fields = await this.dataService.getAllFields("stic_Registrations");
 
     const sesion = await this.API.getRelationships("stic_Events", "876ad600-dce8-25c6-e6d8-6389bc748059", "stic_sessions_stic_events", "", fields);
-    console.log("LA PUTA SESION: ", sesion);
+    console.log("SESION: ", sesion);
 
     if(sesion["entry_list"].length == 0) {
       this.no_registers = "No hay ningún registro.";

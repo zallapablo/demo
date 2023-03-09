@@ -57,7 +57,7 @@ export class ShowPage {
     console.log(pago);
     console.log(id);
 
-    const resp = this.dataService.getLabels("stic_Payments", fields, pago);
+    const resp = this.dataService.getLabels("stic_Payments", fields, pago, "IPago");
     console.log(resp);
 
     return resp;

@@ -9,6 +9,7 @@
 
 <ion-content class="ion-padding">
 
+  <!--
   <ion-list>
 
     <ion-item *ngFor="let item of document; index as i">
@@ -23,7 +24,20 @@
     </ion-item>
 
   </ion-list>
+-->
 
+  <ion-list>
+    <ion-item *ngFor="let doc of document | keyvalue: unsorted">
+      <ion-row size="12">
+        <ion-col size="12">
+          <ion-label style="font-weight: bold;">{{ doc.key }}</ion-label>
+        </ion-col>
+        <ion-col size="12">
+          <ion-label type="text" class="ion-text-wrap">{{ doc.value }}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
   
 
 

@@ -16,51 +16,46 @@
 
 
   <ion-list>
-
-    <ion-item *ngFor="let item of response; index as i">
+    <ion-item *ngFor="let res of response | keyvalue: unsorted">
       <ion-row size="12">
         <ion-col size="12">
-          <ion-label style="font-weight: bold;">{{ item.name }}</ion-label>
+          <ion-label style="font-weight: bold;">{{ res.key }}</ion-label>
         </ion-col>
         <ion-col size="12">
-          <ion-label type="text" class="ion-text-wrap">{{ item.value }}</ion-label>
+          <ion-label type="text" class="ion-text-wrap">{{ res.value }}</ion-label>
         </ion-col>
       </ion-row>
     </ion-item>
-
   </ion-list>
 
   <h1>Dirección</h1>
 
   <ion-list>
-
-    <ion-item *ngFor="let item of direccion; index as i">
+    <ion-item *ngFor="let dir of direccion | keyvalue: unsorted">
       <ion-row size="12">
         <ion-col size="12">
-          <ion-label style="font-weight: bold;">{{ item.name }}</ion-label>
+          <ion-label style="font-weight: bold;">{{ dir.key }}</ion-label>
         </ion-col>
         <ion-col size="12">
-          <ion-label type="text" class="ion-text-wrap">{{ item.value }}</ion-label>
+          <ion-label type="text" class="ion-text-wrap">{{ dir.value }}</ion-label>
         </ion-col>
       </ion-row>
     </ion-item>
-
   </ion-list>
 
   <h1>Adicional</h1>
+ 
   <ion-list>
-
-    <ion-item *ngFor="let item of adicional; index as i">
+    <ion-item *ngFor="let ad of adicional | keyvalue: unsorted">
       <ion-row size="12">
         <ion-col size="12">
-          <ion-label style="font-weight: bold;">{{ item.name }}</ion-label>
+          <ion-label style="font-weight: bold;">{{ ad.key }}</ion-label>
         </ion-col>
         <ion-col size="12">
-          <ion-label type="text" class="ion-text-wrap">{{ item.value }}</ion-label>
+          <ion-label type="text" class="ion-text-wrap">{{ ad.value }}</ion-label>
         </ion-col>
       </ion-row>
     </ion-item>
-
   </ion-list>
  
 </ion-content>

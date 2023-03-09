@@ -126,66 +126,6 @@ export class ApiService {
     }
   }
 
-  async get_User() {
-
-    console.log("Sesión: ", localStorage.getItem("session_id"));
-    
-
-    const args = JSON.stringify({
-      "session": localStorage.getItem("session_id")
-    });
-
-    const response = await this.http.get(this.url, {
-      params: {
-        method: 'get_user_id',
-        input_type: 'JSON',
-        response_type: 'JSON',
-        rest_data: args
-      }
-    })
-    .toPromise()
-    .then(res => {
-      console.log("User id is: ", res);
-    });
-  }
-
-  async getModules() {
-
-    const args = JSON.stringify({
-      "session": localStorage.getItem("session_id")
-    });
-
-    return this.http.get(this.url, {
-      params: {
-        method: 'get_available_modules',
-        input_type: 'JSON',
-        response_type: 'JSON',
-        rest_data: args
-      }
-    }).toPromise();
-  }
-
-  async getEmail() {
-
-    const args = JSON.stringify({
-      "session": localStorage.getItem("session_id"),
-      "module_name": "Users",
-      "id": localStorage.getItem("user_id"),
-      "select_fields": ["email1"],
-      "link_name_to_fields_array": []
-    });
-
-    return this.http.get(this.url, {
-      params: {
-        method: 'get_entry',
-        input_type: 'JSON',
-        response_type: 'JSON',
-        rest_data: args
-      }
-    }).toPromise();
-  }
-  
-
   async getModuleFields(module: any, fields: any) {
 
     const args = JSON.stringify({
@@ -204,26 +144,7 @@ export class ApiService {
     }).toPromise();
   }
 
-  async getEntry(module: any) {
-
-    const args = JSON.stringify({
-      "session": localStorage.getItem("session_id"),
-      "module_name": module,
-      "id": localStorage.getItem("user_id"),
-      "select_fields": [],
-      "link_name_to_fields_array": []
-    });
-
-    return this.http.get(this.url, {
-      params: {
-        method: 'get_entry',
-        input_type: 'JSON',
-        response_type: 'JSON',
-        rest_data: args
-      }
-    }).toPromise();
-  }
-
+  
   async getEntryId(module: any, id: string) {
 
     const args = JSON.stringify({
@@ -304,56 +225,6 @@ export class ApiService {
         rest_data: args
       }
     }).toPromise();
-  }
-
-
-  async getModuleId(query: string) {
-
-    const fields = [
-      
-    ];
-
-    const args = JSON.stringify({
-      "session": localStorage.getItem("session_id"),
-      "module_name": "Contacts",
-      "query": query,
-      "order_by": "",
-      "offset": null,
-      "select_fields": fields,
-      "link_name_to_fields_array": null,
-      "max_results": null,
-      "deleted": false,
-      "favorites": false      
-    });
-
-    this.http.get(this.url, {
-      params: {
-        method: 'get_entry_list',
-        input_type: 'JSON',
-        response_type: 'JSON',
-        rest_data: args
-      }
-    }).subscribe( res => {
-      //console.log("Res ", res)
-    });
-
-    /*const response = await this.http.get(this.url, {
-      params: {
-        method: 'get_entry_list',
-        input_type: 'JSON',
-        response_type: 'JSON',
-        rest_data: args
-      }
-    })
-      .toPromise()
-      .then(res => {
-        console.log("Get module id: \n", res);
-      });
-
-      return response;
-      */
-
-      
   }
 
   async getRelationships(moduleName: string, id: string, link: string, query: string, fields: Array<string>) {
@@ -450,7 +321,7 @@ export class ApiService {
       "track_view": false
     });
 
-    this.http.get(this.url, {
+    return this.http.get(this.url, {
       params:
       {
         method: 'set_entry',
@@ -460,6 +331,58 @@ export class ApiService {
       }
     })
     .toPromise()
+  }
+
+  async setInscripcion(list: any) {
+
+    const args = JSON.stringify({
+      "session": localStorage.getItem("session_id"),
+      "module_name": "stic_Registrations",
+      "name_value_list": list
+    });
+
+    this.http.post(this.url, {
+      params:
+      {
+        method: 'set_entry',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }
+    })
+    .subscribe(res => {
+      console.log(res);
+    })
+  }
+
+  async setEntryPost(moduleName: string, list: any) {
+
+    const args = JSON.stringify({
+      "session": localStorage.getItem("session_id"),
+      "module_name": moduleName,
+      "name_value_list": list,
+      "track_view": false
+    });
+
+    const headers = {
+      'content-type': 'application/json'
+    }
+
+    this.http.post<any>(
+      this.url, 
+      {
+        method: 'set_entry',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      },
+      {
+        responseType: "json"
+      }
+    )
+    .subscribe(response => {
+      console.log("RESPUESTA: ", response);
+    })
   }
 
 

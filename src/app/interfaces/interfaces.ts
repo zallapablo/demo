@@ -13,6 +13,13 @@ export interface IPago {
     payment_method: string
 }
 
+export interface ISession {
+    start_date: string,
+    end_date: string,
+    name: string,
+    description: string
+}
+
 export interface IActividad {
     name: string,
     type: string,
@@ -45,4 +52,36 @@ export interface IDocumento {
     status_id: string,
     category_id: string,
     description: string
+}
+
+export interface IParticipante {
+    first_name: string,
+    last_name: string,
+    stic_identification_type_c: string,
+    stic_identification_number_c: string,
+    stic_gender_c: string,
+    birthdate: string,
+    email1: string,
+    curso_escolar_c: string
+    bosco_descripcio_allergies_c: string,
+    bosco_descripcio_intoler_c: string,
+    bosco_descripcio_tratam_c: string,
+    bosco_descripcio_enfermed_c: string,
+    bosco_descripcio_otros_c: string
+}
+
+export interface IDato {
+    first_name: string,
+    last_name: string,
+    stic_identification_type_c: string,
+    stic_identification_number_c: string,
+    stic_gender_c: string,
+    birthdate: string,
+    email1: string,
+    curso_escolar_c: string
+    bosco_tipovia_c: string,
+    primary_address_street: string,
+    primary_address_city: string,
+    primary_address_state: string,
+    primary_address_postalcode: string
 }

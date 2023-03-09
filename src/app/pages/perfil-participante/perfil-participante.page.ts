@@ -13,15 +13,13 @@ export class PerfilParticipantePage  {
   response: any;
   direccion: any;
   adicional: any;
-  url = "https://confedonbosco.sinergiacrm.org/TEST/service/v4_1/rest.php";
+
+  unsorted() {}
 
   constructor(private API: ApiService,
               private dataService: DataService) { }
 
   async ionViewWillEnter() {
-
-    const id = localStorage.getItem("hijo_spe_id");
-    const link = "stic_personal_environment_contacts_1";
 
     const fields = [
       "first_name",
@@ -52,7 +50,7 @@ export class PerfilParticipantePage  {
 
     const c_id = localStorage.getItem("hijo_contact_id");
     const res1 = await this.API.getEntryFields("Contacts", c_id, fields);
-    console.log(res1);
+    console.log("RES1: ", res1);
 
     const res2 = await this.API.getEntryFields("Contacts", c_id, direccion);
     console.log(res2);
@@ -60,17 +58,8 @@ export class PerfilParticipantePage  {
     const res3 = await this.API.getEntryFields("Contacts", c_id, adicional);
     console.log(res3);
 
-    this.response = this.dataService.singleTransform(res1);
-    this.direccion = this.dataService.singleTransform(res2);
-    this.adicional = this.dataService.singleTransform(res3);
-
-    const lang = await this.API.getLanguageDefinition(["app_list_strings"]);
-    console.log("LANG: ", lang);
-
-    const lang2 = await this.API.getLanguageDefinition(["Contacts"]);
-    console.log("LANG: ", lang2);
-    
-    const mf_fields = await this.API.getModuleFields("Contacts", fields)
-    console.log("FIELDS: ", mf_fields);    
+    this.response = await this.dataService.getLabels("Contacts", fields, res1, "IParticipante");
+    this.direccion = await this.dataService.getLabels("Contacts", direccion, res2, "IParticipante");
+    this.adicional = await this.dataService.getLabels("Contacts", adicional, res3, "IParticipante");
   }
 }

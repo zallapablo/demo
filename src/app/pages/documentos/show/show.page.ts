@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { DataService } from '../../../services/data.service';
 import { saveAs } from 'file-saver';
+import { NavController, AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -17,9 +18,14 @@ export class ShowPage {
   document: any;
   filename: string;
 
-  constructor(private route: ActivatedRoute,
-              private API: ApiService,
-              private dataService: DataService) { }
+  unsorted() {}
+
+  constructor(
+    private route: ActivatedRoute,
+    private API: ApiService,
+    private dataService: DataService,
+    private navCtrl: NavController,
+    private alertController: AlertController) { }
 
   async ionViewWillEnter() {
 
@@ -30,7 +36,11 @@ export class ShowPage {
     });
     
     this.document = await this.getDoc(this.doc_id);
-    this.filename = this.document[0].value;
+    console.log(this.document);
+    
+    this.filename = this.document['Nombre de Archivo:']
+    console.log(this.filename);
+    
   }
   
   async getDoc(doc_id) {
@@ -43,12 +53,14 @@ export class ShowPage {
     ];
 
     const doc = await this.API.getEntryFields("Documents", doc_id, fields);
-    console.log(doc);
+    console.log("DOC: ", doc);
 
-    const docs = await this.API.getEntryId("Documents", doc_id);
-    console.log(docs);
+    const resp = await this.dataService.getLabels("Documents", fields, doc, "IDocumento");
+    console.log(resp);
 
-    return this.dataService.singleTransform(doc);   
+    return resp;
+
+    //return this.dataService.singleTransform(doc);   
   }
 
   async download() {
@@ -70,7 +82,41 @@ export class ShowPage {
     saveAs(blob, this.filename);
   }
 
-  delete() {
-    console.log("Eliminar doc: ", this.doc_id);
+  async delete() {
+
+    const alert = await this.alertController.create({
+      header: '¿Estás seguro de querer borrar este registro?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceptar',
+          role: 'confirm'
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+
+    const list = [
+      {
+        "name": "id",
+        "value": this.doc_id
+      },
+      {
+        "name": "deleted",
+        "value": 1
+      }
+    ]
+
+    if(role == "confirm") {
+      const res = await this.API.setEntry("Documents", list);
+    
+      this.navCtrl.back();
+    }
   }
 }

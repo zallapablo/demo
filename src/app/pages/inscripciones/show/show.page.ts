@@ -45,7 +45,7 @@ export class ShowPage {
     const insc = await this.API.getEntryFields("stic_Registrations", id, fields);
     console.log(insc);
 
-    const resp = this.dataService.getLabels("stic_Registrations", fields, insc);
+    const resp = this.dataService.getLabels("stic_Registrations", fields, insc, "IInscripcion");
     console.log(resp);
 
     return resp;

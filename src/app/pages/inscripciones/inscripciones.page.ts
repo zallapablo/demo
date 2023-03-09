@@ -40,6 +40,9 @@ export class InscripcionesPage {
     const ins = await this.API.getRelationships("Contacts", c_id, "stic_registrations_contacts", "", fields);
     console.log("RELACIOBN:", ins);
 
+    const ins2 = await this.API.getRelationships("Contacts", c_id, "stic_registrations_contacts", "", all_fields);
+    console.log("TODOS LOS DATOS:", ins2);
+
     if(ins["entry_list"].length == 0) {
       this.no_registers = "No hay ningún registro.";
     }

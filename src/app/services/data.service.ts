@@ -1,6 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Componente, IPago, IActividad, IInscripcion } from '../interfaces/interfaces';
+import { Componente, IPago, IActividad, IInscripcion, IAsistencia, IParticipante, IDato } from '../interfaces/interfaces';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -9,6 +10,7 @@ import { ApiService } from './api.service';
 export class DataService {
 
   interfaz = {};
+  datePipe = new DatePipe("es-ES");
 
   constructor(private http: HttpClient,
               private API: ApiService) { }
@@ -63,19 +65,26 @@ export class DataService {
     
   }
 
-  async getLabels(module_name:string, fields: string[], obj: object) {
+  async getLabels(module_name:string, fields: string[], obj: object, inter: string) {
 
-    switch(module_name) {
-      case "stic_Payments": this.interfaz = {} as IPago;
+    switch(inter) {
+      case "IPago": this.interfaz = {} as IPago;
         break;
-      case "stic_Events": this.interfaz = {} as IActividad;
+      case "IActividad": this.interfaz = {} as IActividad;
         break;
-      case "stic_Registrations": this.interfaz = {} as IInscripcion;
+      case "IInscripcion": this.interfaz = {} as IInscripcion;
         break;
+      case "IAsistencia": this.interfaz = {} as IAsistencia;
+        break;
+      case "IParticipante": this.interfaz = {} as IParticipante;
+        break;
+      case "IDato": this.interfaz = {} as IDato;
+        break;
+      default: this.interfaz = {} as IDato;
     }
 
     const mf = await this.API.getModuleFields(module_name, fields);
-    console.log(mf['module_fields']);
+    //console.log(mf['module_fields']);
 
     /*
     for(const [k, v] of Object.entries(mf['module_fields'])) {
@@ -91,13 +100,12 @@ export class DataService {
 
     const transformado = this.singleTransform(obj);
     
-
     transformado.forEach(element => {
-      console.log("Elemento: ", element.name);
+      //console.log("Elemento: ", element.name);
 
       const o = mf['module_fields'][element.name];
 
-      console.log(o);
+      //console.log(o);
       
       if(o.type == "enum") {
         //console.log(o.label, " ES ENUMERADO");
@@ -108,8 +116,12 @@ export class DataService {
         const val = Object.values(o.options)[index]['value'];
         //console.log("VALOR ENUMERADO: ", val);
         this.interfaz[o.label] = val;
-        
-        
+      }
+      else if(o.type == "date") {
+        this.interfaz[o.label] = this.datePipe.transform(element.value, 'dd/MM/yyyy');
+      }
+      else if(o.type == "datetimecombo") {
+        this.interfaz[o.label] = this.datePipe.transform(element.value, 'dd/MM/yyyy HH:mm:ss');
       }
       else {
         this.interfaz[o.label] = element.value;
@@ -117,10 +129,9 @@ export class DataService {
       //console.log(o);
     });
 
-    console.log("CAMPOS FINAL: ", this.interfaz);
-    console.log("TRANSFORMADO: ", transformado);
+    //console.log("CAMPOS FINAL: ", this.interfaz);
+    //console.log("TRANSFORMADO: ", transformado);
 
     return this.interfaz;
   }
-
 }
