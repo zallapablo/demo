@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { DataService } from 'src/app/services/data.service';
+import { LoginPage } from '../../login/login.page';
 
 @Component({
   selector: 'app-show',
@@ -135,6 +136,17 @@ export class ShowPage {
     console.log("RESPUESTA DEL SET: ", res);
     
     this.inscripcion(res);
+
+    const id_list = [
+      res['id']
+    ]
+    
+    const id_hijo = localStorage.getItem("hijo_contact_id");
+    console.log(id_hijo);
+    
+    const rel = await this.API.setRelationship("Contacts", id_hijo, "stic_registrations_contacts", id_list);
+    console.log("RELACIÓN: ", rel);
+    
     //this.router.navigate(["./inscripciones"]);
 
   }

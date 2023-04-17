@@ -165,8 +165,6 @@ export class ApiService {
     }).toPromise();
   }
 
-  
-
   async getEntryFields(module: any, id: string, fields: Array<string>) {
 
     const args = JSON.stringify({
@@ -331,6 +329,30 @@ export class ApiService {
       }
     })
     .toPromise()
+  }
+
+  async setRelationship(moduleName: string, id: string, field: string, related_ids: any) {
+
+    const args = JSON.stringify({
+      "session": localStorage.getItem("session_id"),
+      "module_name": moduleName,
+      "module_id": id,
+      "link_field_name": field,
+      "related_ids": related_ids
+    });
+
+
+    return this.http.get(this.url, {
+      params:
+      {
+        method: 'set_relationship',
+        input_type: 'JSON',
+        response_type: 'JSON',
+        rest_data: args
+      }
+    })
+    .toPromise()
+
   }
 
   async setInscripcion(list: any) {

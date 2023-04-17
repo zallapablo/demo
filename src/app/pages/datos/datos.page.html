@@ -17,6 +17,126 @@
   </ion-text>
 
   <ion-list>
+    
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="nombre" disabled="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Apellidos</ion-label>
+      <ion-input type="text" [(ngModel)]="apellidos" disabled="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Tipo de identificación</ion-label>
+      
+      <ion-select  value="{{tipo_id}}" disabled="false" interface="popover" [(ngModel)]="tipo_id">
+        <ion-select-option value="NIF">NIF</ion-select-option>
+        <ion-select-option value="NIE">NIE</ion-select-option>
+        <ion-select-option value="Pasaporte">Pasaporte</ion-select-option>
+        <ion-select-option value="Otros">Otros</ion-select-option>
+      </ion-select>
+      
+      <!--<ion-input type="text" [(ngModel)]="tipo_id"></ion-input>-->
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Número de identificación</ion-label>
+      <ion-input type="text" [(ngModel)]="num_id"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Sexo</ion-label>
+
+      <ion-select interface="popover" value="{{sexo}}" disabled="false" [(ngModel)]="sexo">
+        <ion-select-option value="Masculino">Masculino</ion-select-option>
+        <ion-select-option value="Femenino">Femenino</ion-select-option>
+        <ion-select-option value="otros">Otros</ion-select-option>
+      </ion-select>
+
+      <!--<ion-input type="text" [(ngModel)]="sexo"></ion-input>-->
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Fecha de nacimiento</ion-label>
+
+      <ion-input type="text" [(ngModel)]="fecha_nac" disabled="true"></ion-input>
+      
+      <!--
+      <ion-input 
+        [(ngModel)]="date" 
+        id="date"
+      ></ion-input>
+
+      <ion-popover trigger="date" size="cover">
+        <ng-template>
+          <ion-datetime
+            presentation="date"
+            [(ngModel)]="date"
+            locale="es-ES"
+          ></ion-datetime>
+        </ng-template>
+      </ion-popover>
+
+      <ion-input type="text" [(ngModel)]="fecha_nac"></ion-input>-->
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Correo electrónico</ion-label>
+      <ion-input type="text" [(ngModel)]="email" disabled="true"></ion-input>
+    </ion-item>
+        
+  </ion-list>
+
+  <br>
+
+  <ion-text>
+    <h1>Datos personales</h1>
+  </ion-text>
+
+  <ion-list>
+    
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Tipo de vía</ion-label>
+      <ion-select value="{{tipo_via}}" [(ngModel)]="tipo_via">
+        <ion-select-option *ngFor="let tipo_via of tipos_via" [value]="tipo_via">{{tipo_via}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Nombre de vía</ion-label>
+      <ion-input type="text" [(ngModel)]="nombre_via"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Población</ion-label>
+      <ion-input type="text" [(ngModel)]="poblacion"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Provincia</ion-label>
+      <ion-select value="{{provincia}}" [(ngModel)]="provincia">
+        <ion-select-option *ngFor="let provincia of provincias" [value]="provincia">{{provincia}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" style="font-weight: bold;">Código postal</ion-label>
+      <ion-input type="text" [(ngModel)]="cod_postal"></ion-input>
+    </ion-item>
+        
+  </ion-list>
+
+
+<!--
+  <ion-list>
+
+    <ion-item *ngFor="let dato of datos | keyvalue: unsorted">
+      <ion-label position="stacked" style="font-weight: bold;">{{dato.key}}</ion-label>
+      <ion-input type="text" [(ngModel)]="dato.value"></ion-input>
+    </ion-item>
+
     <ion-item *ngFor="let dato of datos | keyvalue: unsorted">
       <ion-row size="12">
         <ion-col size="12">
@@ -46,7 +166,7 @@
       </ion-row>
     </ion-item>
   </ion-list>
-
+-->
   <ion-button (click)="save()" expand="block" shape="round" color="corp1" class="ion-margin-top">
 
     <ion-text color="corp2">
