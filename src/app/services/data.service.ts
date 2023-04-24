@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Componente, IPago, IActividad, IInscripcion, IAsistencia, IParticipante, IDato } from '../interfaces/interfaces';
@@ -133,5 +133,39 @@ export class DataService {
     //console.log("TRANSFORMADO: ", transformado);
 
     return this.interfaz;
+  }
+
+  async getActividades() {
+    const aui_api = await this.API.getEntryFields("Contacts", localStorage.getItem("contact_id"), ["assigned_user_id"])
+    const aui = this.singleTransform(aui_api)[0].value;
+
+    const date = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+    console.log("FECHA: ", date);
+    
+    const query = "stic_events.assigned_user_id='" + aui + "' and stic_events.status='registration' and stic_events.end_date>='" + date + "'";
+    //const query = "stic_events.assigned_user_id='" + aui + "'";
+    
+    
+    const acts = await this.API.getEntryListFields("stic_Events", query, []);
+    console.log("Actividades:", acts);
+
+    return acts;
+  }
+
+  async getTodasActividades() {
+    const aui_api = await this.API.getEntryFields("Contacts", localStorage.getItem("contact_id"), ["assigned_user_id"])
+    const aui = this.singleTransform(aui_api)[0].value;
+
+    const date = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+    console.log("FECHA: ", date);
+    
+    const query = "stic_events.assigned_user_id='" + aui + "'";
+    //const query = "stic_events.assigned_user_id='" + aui + "'";
+    
+    
+    const acts = await this.API.getEntryListFields("stic_Events", query, []);
+    console.log("Actividades:", acts);
+
+    return acts;
   }
 }

@@ -17,7 +17,9 @@ export class ParticipantesPage {
 
   constructor(
     private API: ApiService, 
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private router: Router
+    ) { }
 
 
   async SelectClicked(sel: string) {
@@ -26,7 +28,8 @@ export class ParticipantesPage {
 
     this.saveContactId(sel);
     
-    //this.router.navigate(['/inicio']);
+    this.router.navigate(['/inicio']);
+    
   }
 
   async saveContactId(sel: string) {
